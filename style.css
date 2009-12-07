@@ -1,0 +1,63 @@
+blockquote.treelist {
+	padding-top:0px;
+	padding-bottom:0px;
+	margin-top:0px;
+	margin-bottom:0px;
+	padding-left:0px;
+	margin-left:1.5em;
+}
+
+span.commenttext {
+	position:absolute;
+	z-index:5;
+}
+span.withcomment {
+}
+
+span.withcomment a {
+color:inherit;
+text-decoration:none;
+}
+
+span.withcomment a:hover {
+text-decoration:underline;
+cursor:default;
+}
+
+span.withcomment a span.commenttext {
+display:none;
+}
+
+span.withcomment a:hover span.commenttext {
+text-decoration:none;
+background:#ffffff;
+font-family: Arial,Sans-serif;
+font-size: small;
+border:1px solid black;
+display:block;
+padding:3px;
+}
+
+img {
+	border-width:0px;
+}
+
+img.treeimg {
+	vertical-align:bottom;
+	height:16px;
+	width:16px;
+}
+
+.table {
+	display:inline-table;
+	border-collapse:collapse;
+}
+
+.tr {
+	display:table-row;
+}
+
+.td {
+	display:table-cell;
+	vertical-align:top;
+}
