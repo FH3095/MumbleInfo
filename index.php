@@ -116,6 +116,11 @@ elseif(defined('CACHE') AND CACHE>0)
 	$Smarty->compile_check=false;
 	$Smarty->caching=1;
 	$Smarty->cache_lifetime=CACHE;
+	if($Smarty->is_cached('main.tpl'))
+	{
+		$Smarty->display('main.tpl');
+		exit();
+	}
 }
 $Smarty->assign('SELF',$_SERVER['REQUEST_URI']);
 
