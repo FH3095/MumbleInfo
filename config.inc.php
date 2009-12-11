@@ -18,12 +18,12 @@ class CStdConfig
 	var $ShowDeaf=2; // 1=Show, 2=Show as self deafened
 	var $ShowSelfDeaf=1;
 
-	var $ShowSessionID=1;
-	var $ShowUserID=1;
+	var $ShowSessionID=0;
+	var $ShowUserID=0;
 	var $ShowOnlineSecs=0;
 	var $ShowBytesPerSec=1;
-	var $ShowVersion=1;
-	var $ShowOS=1;
+	var $ShowVersion=0;
+	var $ShowOS=0;
 	var $ShowOnlyTCP=1;
 	var $ShowIdleSecs=0;
 	var $ShowOnlineTime=1;
