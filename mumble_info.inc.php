@@ -129,7 +129,7 @@ class CMumbleInfo
 		$this->Config=&$Config;
 	}
 
-	function DoOutput(&$Serv,$Display=true)
+	function DoOutput(&$Serv,&$Mumble,$Display=true)
 	{
 		if($Serv==null)
 		{
@@ -142,6 +142,13 @@ class CMumbleInfo
 			$this->ConvertTreeForOutput($Tree,$UsersAddon);
 			$this->Smarty->assign('Tree',$Tree);
 			$this->Smarty->assign('UsersAddon',$UsersAddon);
+			if($this->Config->ShowServerVersion)
+			{
+				$Version=$Mumble->GetVersion();
+				$VersionStr=$Version['major'].'.'.$Version['minor'].'.'.$Version['patch'];
+				$VersionStr.=' ('.$Version['text'].')';
+				$this->Smarty->assign('ServerVersion',$VersionStr);
+			}
 		}
 		if($Display)
 		{

@@ -30,6 +30,8 @@ class CStdConfig
 	var $ShowIdleTime=1;
 	var $ShowComment=1;
 
+	var $ShowServerVersion=1; // Show server-version on page?
+
 	var $CacheID='';
 };
 
