@@ -45,10 +45,10 @@ class CConfigAdmin extends CStdConfig {
 	var $ShowTalking=1;
 
 	var $ShowReg=1;
-	var $ShowMute=1; // 1=Show, 2=Show as self muted
-	var $ShowSuppress=1; // 1=Show, 2=Show as self muted
+	var $ShowMute=1;
+	var $ShowSuppress=1;
 	var $ShowSelfMute=1;
-	var $ShowDeaf=1; // 1=Show, 2=Show as self deafened
+	var $ShowDeaf=1;
 	var $ShowSelfDeaf=1;
 
 	var $ShowSessionID=1;
