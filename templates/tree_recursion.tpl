@@ -1,5 +1,5 @@
 <div>
-<img class="treeimg" src="images/channel.png" alt="C">
+<img class="treeimg" src="images/channel.png" alt="Channel">
 
 {if $Tree->c->description != ''}
 	<span class="withcomment"><a href="#">
@@ -17,9 +17,9 @@
 		{foreach from=$Tree->users item=User}
 			{assign var='Tpl__UserSession' value=$User->session}
 			{if isset($UsersAddon.$Tpl__UserSession.isTalking) AND false!=$UsersAddon.$Tpl__UserSession.isTalking}
-				<img class="treeimg" src="images/talking_on.png" alt="U">
+				<img class="treeimg" src="images/talking_on.png" alt="User">
 			{else}
-				<img class="treeimg" src="images/talking_off.png" alt="U">
+				<img class="treeimg" src="images/talking_off.png" alt="User">
 			{/if}
 			{if isset($UsersAddon.$Tpl__UserSession.InfoData) AND $UsersAddon.$Tpl__UserSession.InfoData|@count > 0}
 			{* Following must be one line because otherwise the comment-link will have a trailing whitespace *}
