@@ -1,13 +1,9 @@
 {include file='header.tpl'}
 <body>
-{if isset($NoServer) && true==$NoServer}
-	<div>There is no such server.</div>
-{else}
-	{include file='tree_recursion.tpl' Tree=$Tree}
+{if isset($LoginLink) && ''!=$LoginLink}
+	<div style="float:right;"><a href="login.php">{$LoginLink}</a></div>
 {/if}
-{if isset($ServerVersion) && ""!=$ServerVersion}
-<div>Server version: {$ServerVersion}</div>
-{/if}
+{include file='tree.tpl'}
 {$RawDebug}
 </body>
 {include file='footer.tpl'}

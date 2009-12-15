@@ -7,20 +7,24 @@ class CMumble
 	var $Meta=null;
 	var $Servers=null;
 
-	function GetBase()
+	function &GetBaseRef()
 	{ return $this->Base; }
-	function GetMeta()
+	function &GetMetaRef()
 	{ return $this->Meta; }
-	function GetServers()
+	function &GetServersRef()
 	{ return $this->Servers; }
 
-	function Init($Host='127.0.0.1',$Port=6502,$OnlyBooted=true,$ProxyParams='')
+	function Init($Host='127.0.0.1',$Port=6502,$ProxyParams='')
 	{
 		global $ICE;
 		$this->Base = $ICE->stringToProxy('Meta:tcp -h '.$Host.' -p '.$Port.' '.$ProxyParams);
 		$this->Meta = $this->Base->ice_checkedCast('::Murmur::Meta');
+	}
 
+	function LoadServers($OnlyBooted=true)
+	{
 		$this->Servers=array();
+
 		$RawServers=null;
 		if($OnlyBooted)
 		{
@@ -50,13 +54,15 @@ class CMumble
 		return $Server;
 	}
 
-	function NewServer()
+	function NewServer($AddToArray=true)
 	{
 		$MumbleServer=$this->Meta->newServer();
 		if(!$MumbleServer)
 		{	return null;	}
 		$Server=new CServer();
 		$Server->Init($MumbleServer);
+		if($AddToArray)
+		{	$this->Servers[]=$Server;	}
 		return $Server;
 	}
 

@@ -1,9 +1,12 @@
 <?php
+require_once('class_base.inc.php');
 
-class CMumbleInfo
+class CMumbleInfo extends CClassBase
 {
 	var $Config=null;
 	var $Smarty=null;
+	var $UsersAddon=null;
+	var $Tree=null;
 
 	/*
 	usort($Tree->children,"TreeChildrenCmp");
@@ -137,11 +140,11 @@ class CMumbleInfo
 		}
 		else
 		{
-			$Tree=$Serv->GetTree();
-			$UsersAddon=array();
-			$this->ConvertTreeForOutput($Tree,$UsersAddon);
-			$this->Smarty->assign('Tree',$Tree);
-			$this->Smarty->assign('UsersAddon',$UsersAddon);
+			$this->Tree=$Serv->GetTree();
+			$this->UsersAddon=array();
+			$this->ConvertTreeForOutput($this->Tree,$this->UsersAddon);
+			$this->Smarty->assign_by_ref('Tree',$this->Tree);
+			$this->Smarty->assign_by_ref('UsersAddon',$this->UsersAddon);
 			if($this->Config->ShowServerVersion)
 			{
 				$Version=$Mumble->GetVersion();
@@ -158,30 +161,30 @@ class CMumbleInfo
 
 	function Display()
 	{
-		$this->Smarty->display('main.tpl',$this->Config->CacheID);
+		$this->Smarty->display('tree_main.tpl',$this->Config->CacheID);
 	}
 
-	function GetServByID(&$Mumble,$ID)
+	function &GetServByID(&$Mumble,$ID)
 	{
 		settype($ID,'int');
-		$Servers=$Mumble->GetServers();
+		$Servers=$Mumble->GetServersRef();
 		foreach($Servers AS $Serv)
 		{
-			if($Serv->id()==$ID)
+			if($Serv->GetID()==$ID)
 			{	return $Serv;	}
 		}
-		return null;
+		return $this->GetNullRef();
 	}
 
-	function GetServByArrayPos(&$Mumble,$Pos)
+	function &GetServByArrayPos(&$Mumble,$Pos)
 	{
 		settype($Pos,'int');
-		$Servers=$Mumble->GetServers();
+		$Servers=$Mumble->GetServersRef();
 		if(isset($Servers[$Pos]))
 		{
 			return $Servers[$Pos];
 		}
-		return null;
+		return $this->GetNullRef();
 	}
 };
 ?>

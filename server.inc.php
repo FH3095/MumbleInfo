@@ -4,7 +4,7 @@ class CServer
 {
 	var $Server=null;
 
-	function GetMumbleServer()
+	function &GetMumbleServer()
 	{	return $this->Server;	}
 
 	function Init($Server)
