@@ -126,8 +126,6 @@ class CMumbleInfo extends CClassBase
 			}
 		}
 
-		$Smarty->assign('SELF',$_SERVER['REQUEST_URI']);
-
 		$this->Smarty=&$Smarty;
 		$this->Config=&$Config;
 	}
@@ -162,29 +160,6 @@ class CMumbleInfo extends CClassBase
 	function Display()
 	{
 		$this->Smarty->display('tree_main.tpl',$this->Config->CacheID);
-	}
-
-	function &GetServByID(&$Mumble,$ID)
-	{
-		settype($ID,'int');
-		$Servers=$Mumble->GetServersRef();
-		foreach($Servers AS $Serv)
-		{
-			if($Serv->GetID()==$ID)
-			{	return $Serv;	}
-		}
-		return $this->GetNullRef();
-	}
-
-	function &GetServByArrayPos(&$Mumble,$Pos)
-	{
-		settype($Pos,'int');
-		$Servers=$Mumble->GetServersRef();
-		if(isset($Servers[$Pos]))
-		{
-			return $Servers[$Pos];
-		}
-		return $this->GetNullRef();
 	}
 };
 ?>

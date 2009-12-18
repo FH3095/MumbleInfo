@@ -6,7 +6,14 @@ define('CACHE',FALSE);
 define('ICE_PROFILE','Mumble12');
 define('SMARTY_CLASS','../../Smarty/Smarty.class.php');
 
-define('SESSION_NAME','MUMBLE_INFO_SESS_ID');
+define('SQL_SERVER','127.0.0.1');
+define('SQL_USER','fh_home');
+define('SQL_PW','FH');
+define('SQL_DB','fh_mumbleinfo');
+define('SQL_PREFIX','mumbleinfo');
+
+define('SESSION_DURATION',86400);
+define('SESSION_NAME','MUMBLE_INFO_SESS');
 define('IS_TALKING_IDLE_TIME',1);
 define('SHOW_LOGIN_LINK',TRUE);
 define('VIEWER_ONLY',FALSE); // Just for security, doesn't produce any visual difference
@@ -35,8 +42,6 @@ class CStdConfig
 	var $ShowIdleTime=1;
 	var $ShowComment=1;
 
-	var $AllowLogin=1; // Is login allowed (only applies to CConfigReg and CConfigAdmin)
-
 	var $ShowServerVersion=1; // Show server-version on page?
 
 	var $CacheID='';
@@ -46,32 +51,15 @@ class CConfigUnreg extends CStdConfig {
 	var $CacheID='unreg';
 }
 
-class CConfigReg extends CStdConfig {
-	var $CacheID='reg';
+class CConfigByDB extends CStdConfig {
+	var $CacheID='';
 }
 
-class CConfigAdmin extends CStdConfig {
-	var $ShowTalking=1;
-
-	var $ShowReg=1;
-	var $ShowMute=1;
-	var $ShowSuppress=1;
-	var $ShowSelfMute=1;
-	var $ShowDeaf=1;
-	var $ShowSelfDeaf=1;
-
-	var $ShowSessionID=1;
-	var $ShowUserID=1;
-	var $ShowOnlineSecs=1;
-	var $ShowBytesPerSec=1;
-	var $ShowVersion=1;
-	var $ShowOS=1;
-	var $ShowOnlyTCP=1;
-	var $ShowIdleSecs=1;
-	var $ShowOnlineTime=1;
-	var $ShowIdleTime=1;
-	var $ShowComment=1;
-
-	var $CacheID='admin';
+function MakeSqlError(&$DB)
+{
+	$Error=$DB->Error();
+	if($Error['code']==0)
+	{	return "";	}
+	return 'MySQL-Error: '.$Error['code'].'('.$Error['msg'].")\n";
 }
 ?>

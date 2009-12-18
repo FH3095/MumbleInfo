@@ -8,29 +8,32 @@ require_once('mumble_info.inc.php');
 require_once(SMARTY_CLASS);
 
 $Smarty=new Smarty;
+$Smarty->assign('SELF',$_SERVER['REQUEST_URI']);
 header('Content-Type: text/html; charset=UTF-8');
 //Ice_dumpProfile();
 $Mumble=new CMumble();
 $Mumble->Init();
 $Mumble->LoadServers();
-
+$Action=isset($_GET['do']) ? $_GET['do'] : '';
 
 $Config=null;
-if(VIEWER_ONLY===FALSE)
+$Session=null;
+if(VIEWER_ONLY==false)
 {
-	if(SESSION_NAME!='')
+	require_once('session.inc.php');
+
+	$Session=new CSession();
+	$Session->Start();
+	if($Action=='login')
 	{
-		session_name(SESSION_NAME);
+		if(isset($_POST['post_data']) AND 1==$_POST['post_data'])
+		{
+		}
+		else
+		{
+			$Smarty->display('login.tpl');
+		}
 	}
-	session_start();
-	/*if(SHOW_LOGIN_LINK)
-	{
-		$Smarty->assign('LoginLink','Login');
-	}
-	if(isset($_SESSION['LoggedIn']) AND $_SESSION['LoggedIn']==1)
-	{
-		$Config=new CConfigReg();
-	}*/
 }
 if($Config==null)
 {
@@ -55,15 +58,15 @@ $MumbleInfo->InitOutput($Smarty,$Config);
 $Server=null;
 if(SHOW_SERVER>0)
 {
-	$Server=$MumbleInfo->GetServByID($Mumble,SHOW_SERVER);
+	$Server=$Mumble->GetServByID(SHOW_SERVER);
 }
 else
 {
-	$Server=$MumbleInfo->GetServByArrayPos($Mumble,SHOW_SERVER);
+	$Server=$Mumble->GetServByArrayPos(-SHOW_SERVER);
 }
 
 $Smarty->assign('RawDebug','<pre>MemUsage: '.memory_get_usage().'<br>RealMemUsage: '.memory_get_usage(true).'</pre>');
-if(VIEWER_ONLY!==TRUE)
+if(VIEWER_ONLY!==true)
 {
 	$MumbleInfo->DoOutput($Server,$Mumble,false);
 	$Smarty->display('main.tpl');

@@ -1,7 +1,8 @@
 <?php
 require_once('server.inc.php');
+require_once('class_base.inc.php');
 
-class CMumble
+class CMumble extends CClassBase
 {
 	var $Base=null;
 	var $Meta=null;
@@ -38,20 +39,30 @@ class CMumble
 		foreach($RawServers AS $CurServer)
 		{
 			$this->Servers[$i]=new CServer();
-			$this->Servers[$i]->Init($CurServer);
+			$this->Servers[$i]->Init($CurServer,$this);
 			$i++;
 		}
 	}
 
-	function GetServer($ID)
+	function &GetServByID($ID)
 	{
 		settype($ID,'int');
-		$MumbleServer=$this->Meta->getServer($ID);
-		if(!$MumbleServer)
-		{	return null;	}
-		$Server=new CServer();
-		$Server->Init($MumbleServer);
-		return $Server;
+		foreach($this->Servers AS $Serv)
+		{
+			if($Serv->GetID()==$ID)
+			{	return $Serv;	}
+		}
+		return $this->GetNullRef();
+	}
+
+	function &GetServByArrayPos($Pos)
+	{
+		settype($Pos,'int');
+		if(isset($this->Servers[$Pos]))
+		{
+			return $this->Servers[$Pos];
+		}
+		return $this->GetNullRef();
 	}
 
 	function NewServer($AddToArray=true)
@@ -60,7 +71,7 @@ class CMumble
 		if(!$MumbleServer)
 		{	return null;	}
 		$Server=new CServer();
-		$Server->Init($MumbleServer);
+		$Server->Init($MumbleServer,$this);
 		if($AddToArray)
 		{	$this->Servers[]=$Server;	}
 		return $Server;

@@ -3,13 +3,17 @@
 class CServer
 {
 	var $Server=null;
+	var $Mumble=null;
 
 	function &GetMumbleServer()
 	{	return $this->Server;	}
+	function &GetMumbleInstance()
+	{	return $this->Mumble;	}
 
-	function Init($Server)
+	function Init(&$Server,&$Mumble)
 	{
-		$this->Server=$Server;
+		$this->Server=&$Server;
+		$this->Mumble=&$Mumble;
 	}
 
 	function IsRunning()
@@ -46,9 +50,34 @@ class CServer
 		return $this->Server->getConf($Key);
 	}
 
+	function GetCompleteConfKey($Key)
+	{
+		$ConfValue=$this->GetConf($Key);
+		if(!empty($ConfValue))
+		{	return $ConfValue;	}
+
+		$DefaultConf=$this->Mumble->GetDefaultConf();
+		if(isset($DefaultConf[$Key]))
+		{	return $DefaultConf[$Key];	}
+		return '';
+	}
+
+	function GetCompleteConf(&$Conf)
+	{
+		$Conf=array_merge($Conf,$this->GetConf(0));
+	}
+
 	function SetConf($Key,$Val)
 	{
 		$this->Server->setConf($Key,$Val);
+	}
+
+	function SetConfArray(&$Conf)
+	{
+		foreach($Conf AS $Key=>$Val)
+		{
+			$this->SetConf($Key,$Val);
+		}
 	}
 
 	function SetSuperuserPassword($PW)
